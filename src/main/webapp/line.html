@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+ <link href="style.css" media="screen" rel="stylesheet" type="text/css" />     	
+ </head>
+<body>
+<script type="text/javascript">
+<!-- парсим json массив и передаем в таблицу, запрос для получения json строки -->
+$.getJSON('http://localhost:8080/web/luxoft/files/'+getUrlParameter('idfile'), { get_param: 'value' }, function(data) {
+	 var tr;
+	    for (var i = 0; i < data.length; i++) {
+	        tr = $('<tr/>');
+
+	        tr.append("<td>" + data[i].longWord + "</td>");
+	        tr.append("<td>" + data[i].shortWord + "</td>");
+	        tr.append("<td>" + data[i].lineLength + "</td>");
+	        tr.append("<td>" + data[i].avgWord + "</td>");
+	        $('table').append(tr);
+	    }
+})
+<!-- получаем из url id файла для отображени -->
+function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) { 
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+</script> 
+
+<a href="http://localhost:8080/web/index.html">Вернуться назад</a>
+
+<table id="table"> 
+	<tr>
+        <td>Длинное слово</td>
+        <td>Короткое</td>
+        <td>Длинна строки</td>
+        <td>Средняя длинна строки</td>
+    </tr>
+</table>
+</body>
+</html>
